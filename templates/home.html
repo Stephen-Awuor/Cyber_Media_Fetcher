@@ -85,7 +85,73 @@
 
           </div>
 
+        {% endif %}
+
+        {% if error %}
+<div class="alert alert-danger mt-4">
+    {{ error }}
+</div>
 {% endif %}
+
+{% if video %}
+
+<div class="card mt-4 text-dark">
+
+    <img src="{{ video.thumbnail }}" class="card-img-top">
+
+    <div class="card-body">
+
+        <h>{{ video.title }}</h>
+
+        <p>
+            Uploaded by:
+            {{ video.uploader }}
+        </p>
+
+        <p>
+            Duration:
+            {{ video.duration }}
+            seconds
+        </p>
+
+    </div>
+
+    <hr>
+
+<h4>Available Formats</h4>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Format ID</th>
+            <th>Resolution</th>
+            <th>Extension</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for format in video.formats %}
+        <tr>
+            <td>
+                {{ format.format_id }}
+            </td>
+            <td>
+                {{ format.resolution }}
+            </td>
+            <td>
+                {{ format.ext }}
+            </td>
+            <td>
+
+        <a href="{% url 'download' %}?url={{ video.url }}&format={{ format.format_id }}" class="btn btn-success btn-sm">Download</a>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+   </div>
+
+        {% endif %}
 
         <div class="mt-4">
 
